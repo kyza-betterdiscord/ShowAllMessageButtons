@@ -93,8 +93,8 @@
 	const PublishButton_MiniPopover = PublishButton_findModule((m => "MiniPopover" === m?.default?.displayName));
 	const PublishButton_Tooltip = PublishButton_findModuleByDisplayName("Tooltip");
 	const {
-		confirmPublish
-	} = PublishButton_findModuleByProps("confirmPublish");
+		publishMessage
+	} = PublishButton_findModuleByProps("publishMessage");
 	const PublishButton_iconClasses = PublishButton_findModuleByProps("icon", "isHeader");
 	const PublishButton = PublishButton_React.memo((function(props) {
 		return PublishButton_React.createElement(PublishButton_Tooltip, {
@@ -107,7 +107,7 @@
 		}) => PublishButton_React.createElement(PublishButton_MiniPopover.Button, {
 			ariaLabel: "Publish",
 			onClick: () => {
-				confirmPublish(props.channel_id, props.id);
+				publishMessage(props.channel_id, props.id);
 			},
 			onMouseEnter,
 			onMouseLeave
