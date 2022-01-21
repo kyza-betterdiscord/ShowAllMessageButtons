@@ -2,7 +2,7 @@
  * @name ShowAllMessageButtons
  * @description Forces the utility buttons on messages hidden in the context menu to always be displayed as buttons.
  * @author Kyza
- * @version 1.0.0
+ * @version 1.1.0
  * @license None
  */
 (() => {
@@ -93,10 +93,12 @@
 	const PublishButton_MiniPopover = PublishButton_findModule((m => "MiniPopover" === m?.default?.displayName));
 	const PublishButton_Tooltip = PublishButton_findModuleByDisplayName("Tooltip");
 	const {
-		confirmPublish
-	} = PublishButton_findModuleByProps("confirmPublish");
+		publishMessage
+	} = PublishButton_findModuleByProps("publishMessage");
+	const { MessageFlags } = PublishButton_findModuleByProps("MessageFlags");
 	const PublishButton_iconClasses = PublishButton_findModuleByProps("icon", "isHeader");
 	const PublishButton = PublishButton_React.memo((function(props) {
+		console.log(props.message);
 		return PublishButton_React.createElement(PublishButton_Tooltip, {
 			color: "black",
 			postion: "top",
@@ -107,8 +109,9 @@
 		}) => PublishButton_React.createElement(PublishButton_MiniPopover.Button, {
 			ariaLabel: "Publish",
 			onClick: () => {
-				confirmPublish(props.channel_id, props.id);
+				if (!props.message.hasFlag(MessageFlags.CROSSPOSTED)) publishMessage(props.channel, props.message);
 			},
+			disabled: props.message.hasFlag(MessageFlags.CROSSPOSTED),
 			onMouseEnter,
 			onMouseLeave
 		}, PublishButton_React.createElement("svg", {
@@ -331,8 +334,8 @@
 				if (props.canPublish) ret.props.children.splice(ret.props.children.length - 2, 0, ShowAllMessageButtons_React.createElement(ErrorBoundary, {
 					fallback: (() => null)()
 				}, ShowAllMessageButtons_React.createElement(PublishButton, {
-					id: props.message.id,
-					channel_id: props.message.channel_id
+					message: props.message,
+					channel: props.channel
 				})));
 				return ret;
 			}));
