@@ -294,7 +294,7 @@
 	const SwitchItem = ShowAllMessageButtons_findModuleByDisplayName("SwitchItem");
 	const ConfirmationActions = ShowAllMessageButtons_findModuleByProps("confirmDelete");
 	const MessageActions = ShowAllMessageButtons_findModuleByProps("deleteMessage");
-	const FluxDispatcher = ShowAllMessageButtons_findModuleByProps("dirtyDispatch");
+	const FluxDispatcher = ShowAllMessageButtons_findModuleByProps("_dispatch");
 	let emojiPickerMessage = "";
 	let addedListener = false;
 	class ShowAllMessageButtons {
@@ -379,7 +379,7 @@
 		}
 		updateMessage(message, showEmojiPicker) {
 			emojiPickerMessage = showEmojiPicker ? message.id : "";
-			FluxDispatcher.dirtyDispatch({
+			FluxDispatcher.dispatch({
 				type: "MESSAGE_UPDATE",
 				message
 			});
