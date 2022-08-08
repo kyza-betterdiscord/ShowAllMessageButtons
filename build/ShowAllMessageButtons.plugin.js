@@ -2,7 +2,7 @@
  * @name ShowAllMessageButtons
  * @description Forces the utility buttons on messages hidden in the context menu to always be displayed as buttons.
  * @author Kyza
- * @version 1.1.0
+ * @version 1.1.1
  * @license None
  */
 (() => {
